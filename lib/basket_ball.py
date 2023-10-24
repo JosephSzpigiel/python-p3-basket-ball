@@ -182,3 +182,59 @@ def game_dict():
             ]
         }
     }
+
+def  num_points_per_game(player):
+    for home_away in game_dict():
+        for game_player in game_dict()[home_away]['players']:
+            if game_player['name'] == player:
+                return game_player["points_per_game"]
+
+def player_age(player):
+    for home_away in game_dict():
+        for game_player in game_dict()[home_away]['players']:
+            if game_player['name'] == player:
+                return game_player["age"]
+
+def team_colors(team):
+    for home_away in game_dict():
+        if game_dict()[home_away]['team_name'] == team:
+            return game_dict()[home_away]['colors']
+
+def team_names():
+    teams = []
+    for home_away in game_dict():
+        teams.append(game_dict()[home_away]['team_name'])
+    return teams
+
+def player_numbers(team):
+    numbers = []
+    for home_away in game_dict():
+        if game_dict()[home_away]['team_name'] == team:
+            for player in game_dict()[home_away]['players']:
+                numbers.append(player['number'])
+    return numbers
+
+
+def player_stats(player):
+    stats = {}
+    for home_away in game_dict():
+        for game_player in game_dict()[home_away]['players']:
+            if game_player['name'] == player:
+                for stat in game_player:
+                    stats[stat] = game_player[stat]
+    return stats
+
+def average_rebounds_by_shoe_brand():
+    brand_rebounds = {}
+    for home_away in game_dict():
+        for game_player in game_dict()[home_away]['players']:
+            if game_player['shoe_brand'] in brand_rebounds:
+                brand_rebounds[game_player['shoe_brand']].append(game_player['rebounds_per_game'])
+            else:
+                brand_rebounds[game_player['shoe_brand']] = [game_player['rebounds_per_game']]
+    for brand in brand_rebounds:
+        brand_rebounds[brand] = round((sum(brand_rebounds[brand]))/len(brand_rebounds[brand]),2)
+        print(f'{brand}:  {brand_rebounds[brand]}')
+
+
+average_rebounds_by_shoe_brand()
